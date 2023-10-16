@@ -1,22 +1,20 @@
-clearvars -Except record
 % Data generation
-%record = table2array(record);
-Y = eemdbeforepredict(record,0); % dynamic system
-%Y = matsurrogate(Y,1,6,1);
-%Y = record;
-noisestrength=0*10^(-1);  %external noise up to 2e-4
+[adjmat1,adjmat2,adjmat3,change1,change2,record] = NWnetdata(10,1,0.2); % Two cps are set at 2500 and 2700
+clearvars -Except record result adjmat1 adjmat2 adjmat3 change1 change2
+
+Y = record;
+noisestrength=0*10^(-4);  %external noise up to 2e-4
 X=Y+noisestrength*rand(size(Y));% noise could be added
-timelag=0;
+trainlength=30; % length of training data (observed data)  
+timelag=2400-30-1; % Skip the first 2400 points, for data alignment we need to cut off 30 more points (equal to the trainlength)
 xx=X(timelag+1:end,:)';
 
-maxstep=19000; % steps to predict
-j=18; % the index of target variable
-trainlength=30; % length of training data (observed data)  
+maxstep=400; % steps to predict
+j=1; % the index of target variable
 
-s=80;% number of non-delay embedding
+s=600;% number of non-delay embedding
 L=4;% embedding dimension, which could be determined using FNN or set empirically
 result=zeros(3,maxstep);
-%dis=zeros(6,10000);
 
 for step=1:maxstep
 warning off
@@ -24,7 +22,7 @@ predictions=zeros(1,s);
 traindata=xx(:,step:trainlength+step-1);
 real=xx(j,trainlength+step);
 D=size(traindata,1); % number of variables in the system
-cmb=combntns(1:D,L);
+cmb=nchoosek(1:D,L);
 r=randperm(size(cmb,1));
 B=cmb(r,:);
 
@@ -56,3 +54,6 @@ plot(result(2,1:maxstep));
 
 figure
 plot(result(3,1:maxstep));
+
+% Output the std.dev data for changepoint detection
+writematrix(result(2,1:maxstep),'/Users/houjiawen/Desktop/stderror.csv');
