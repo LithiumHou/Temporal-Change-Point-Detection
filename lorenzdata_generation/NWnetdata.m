@@ -27,7 +27,7 @@ end
 for i=change1:change2-1
 
 for j=1:M
-x(j,i+1)=x(j,i)+stepsize*(10.2*(y(j,i)-x(j,i))+C*adjmat1(j,:)*x(:,i));
+x(j,i+1)=x(j,i)+stepsize*(10.2*(y(j,i)-x(j,i))+C*adjmat2(j,:)*x(:,i));
 y(j,i+1)=y(j,i)+stepsize*(28*x(j,i)-y(j,i)-x(j,i)*z(j,i));
 z(j,i+1)=z(j,i)+stepsize*(-8/3*z(j,i)+x(j,i)*y(j,i));
 end
