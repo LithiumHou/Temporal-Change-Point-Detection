@@ -2,7 +2,8 @@
 % prediction parameters:
 % timelag=3500-15-1;maxstep=1000;j=1; trainlength=15+1; 
 % s=15;L=3;
-% data = result(1,:);
+% data = result(1,:);, could be obtained at bionetresult.mat
+% Record data could be obtained at bionetrecord.mat
 clearvars -Except data record   %data: 1~1000
 clc
 global init
