@@ -1,8 +1,10 @@
 # -*- coding: utf-8 -*-
 """
 Created on Sun Mar 14 22:15:55 2021
+Last updated on Mon Oct 16 2023
 Refer to: http://gregorygundersen.com/blog/2019/08/13/bocd/
 The main function have been modified.
+Python version: 3.11.5
 """
 
 import matplotlib.pyplot as plt
@@ -160,10 +162,10 @@ def plot_posterior(T, data, R):
 
 if __name__ == '__main__':
     
-    hazard = 1/140  # the prior knowledge of CP frequency
+    hazard = 1/300  # the prior knowledge of CP frequency
 
     # where the prediction results(err or std) are saved
-    data2 = pd.read_csv('E:\\record.csv', header=None)  
+    data2 = pd.read_csv('/Users/houjiawen/Desktop/stderror.csv', header=None)  
     
     data2 = np.array(data2)[0,:]
     #data2=abs(data2)
@@ -222,6 +224,3 @@ if __name__ == '__main__':
     else:
         print('Detected change points are at: ',candidates)
         
-            
-    
-   
