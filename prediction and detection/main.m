@@ -1,3 +1,5 @@
+% The main function to make predictions on the target record
+
 % Data generation
 [adjmat1,adjmat2,adjmat3,change1,change2,record] = NWnetdata(10,1,0.2); % Two cps are set at 2500 and 2700
 clearvars -Except record result adjmat1 adjmat2 adjmat3 change1 change2
@@ -6,7 +8,7 @@ Y = record;
 noisestrength=0*10^(-4);  %external noise up to 2e-4
 X=Y+noisestrength*rand(size(Y));% noise could be added
 trainlength=30; % length of training data (observed data)  
-timelag=2400-30-1; % Skip the first 2400 points, for data alignment we need to cut off 30 more points (equal to the trainlength)
+timelag=2400-trainlength-1; % Skip the first 2400 points, for data alignment we need to cut off 30 more points (equal to the trainlength)
 xx=X(timelag+1:end,:)';
 
 maxstep=400; % steps to predict
